@@ -29,9 +29,9 @@ module OmniAuth
       end
 
       def raw_info
-        logger.debug "before-"*100
+        `say "before"`
         @raw_info ||= access_token.get('/auth/getUserDataInternal?attribute=email&f=json').parsed
-        logger.debug "after-"*100
+        `say "before"`
       end
     end
   end
