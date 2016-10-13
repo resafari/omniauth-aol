@@ -12,16 +12,23 @@ module OmniAuth
         :token_url => 'https://api.screenname.aol.com/auth/access_token',
       }
 
-      uid{ raw_info['response']['data']['userData']['loginId'] }
+      uid { "placeholder" }
+#       uid{ raw_info['response']['data']['userData']['loginId'] }
 
       info do
         {
-            :email => raw_info['response']['data']['userData']['attributes']['email'],
-            :display_name => raw_info['response']['data']['userData']['displayName'],
-            :login_id => raw_info['response']['data']['userData']['loginId'],
-            :last_auth => raw_info['response']['data']['userData']['lastAuth']
+            :email => "placeholder"
         }
       end
+
+#       info do
+#         {
+#             :email => raw_info['response']['data']['userData']['attributes']['email'],
+#             :display_name => raw_info['response']['data']['userData']['displayName'],
+#             :login_id => raw_info['response']['data']['userData']['loginId'],
+#             :last_auth => raw_info['response']['data']['userData']['lastAuth']
+#         }
+#       end
 
       extra do
         {
@@ -30,14 +37,15 @@ module OmniAuth
       end
 
       def build_access_token
-        puts "*"*100
+        puts "-"*100
         verifier = request.params['code']
         redirect_uri = URI.parse(callback_url).tap { |uri| uri.query = nil }.to_s
         client.auth_code.get_token(verifier, {:redirect_uri => redirect_uri}.merge(token_params.to_hash(:symbolize_keys => true)), deep_symbolize(options.auth_token_params))
       end
       
       def raw_info
-        @raw_info ||= access_token.get('/auth/getUserDataInternal?attribute=email&f=json').parsed
+        @raw_info ||= Hash.new
+#         @raw_info ||= access_token.get('/auth/getUserDataInternal?attribute=email&f=json').parsed
       end
     end
   end
