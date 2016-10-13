@@ -1,4 +1,6 @@
-require 'omniauth-oauth2'
+require 'omniauth/strategies/oauth2'
+require 'openssl'
+require 'rack/utils'
 
 module OmniAuth
   module Strategies
